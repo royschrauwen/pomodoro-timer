@@ -18,6 +18,9 @@ main {
   background-color: white;
   padding: 2rem;
   border-radius: 0.5rem;
+  box-shadow: 3px 2px 15px -3px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 3px 2px 15px -3px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 3px 2px 15px -3px rgba(0, 0, 0, 0.7);
 }
 
 h1 {
