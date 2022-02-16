@@ -7,6 +7,9 @@ const background = document.querySelector("body");
 
 startButton.addEventListener("click", startTimer);
 
+const workColor = "#FF6347";
+const breakColor = "#7FFFD4";
+
 // Time in minutes. Can be inputted in later version
 const workTimeInMinutes = 1; // Default 25
 const shortBreakTimeInMinutes = 2; // Default 3
@@ -93,7 +96,7 @@ function addLeadingZero(number) {
 
 function startShortBreak() {
   console.log("Short break");
-  background.style.backgroundColor = "#00FF00";
+  background.style.backgroundColor = breakColor;
   currentSequence--;
   console.log(
     "currentSequence: " +
@@ -117,7 +120,7 @@ function startWorking() {
       ")"
   );
   console.log("Working!");
-  background.style.backgroundColor = "#FF0000";
+  background.style.backgroundColor = workColor;
   currentlyWorking = 1;
   currentTime = 5;
   timeInterval = window.setInterval(updateTimer, 1000);
