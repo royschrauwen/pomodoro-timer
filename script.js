@@ -13,9 +13,9 @@ const workColor = "#FF6347";
 const breakColor = "#7FFFD4";
 
 // Time in minutes. Can be inputted in later version
-const workTimeInMinutes = 1; // Default 25
-const shortBreakTimeInMinutes = 2; // Default 3
-const longBreakTimeInMinutes = 3; // Default 30
+const workTimeInMinutes = 25; // Default 25
+const shortBreakTimeInMinutes = 3; // Default 3
+const longBreakTimeInMinutes = 30; // Default 30
 
 // Make seconds from the times.
 const workTimeInSeconds = workTimeInMinutes * 60;
@@ -36,12 +36,12 @@ const sequenceNames = [
   "Work 1",
 ];
 
-const defaultWorkTimes = 3; // 3 work timers before a long break
-let currentWorkTime;
-let currentlyWorking = 0;
+// const defaultWorkTimes = 3; // 3 work timers before a long break
+// let currentWorkTime;
+// let currentlyWorking = 0;
 
 var currentTime = workTimeInSeconds;
-var currentTime = 5;
+// var currentTime = 5;
 
 let timeInterval;
 
@@ -73,7 +73,6 @@ function updateTimer() {
 function startTimer() {
   statusField.textContent = "Let's start working!";
   console.log("START TIMER!");
-  //currentTime = workTimeInSeconds;
   currentSequence = defaultSequence;
   console.log(
     "currentSequence: " +
@@ -83,7 +82,7 @@ function startTimer() {
       ")"
   );
   currentlyWorking = 1;
-  currentWorkTime = defaultWorkTimes;
+  currentWorkTime = workTimeInSeconds;
   timeInterval = window.setInterval(updateTimer, 1000);
 }
 
@@ -109,7 +108,7 @@ function startShortBreak() {
       currentSequence +
       ")"
   );
-  currentTime = 5;
+  currentTime = shortBreakTimeInSeconds;
   timeInterval = window.setInterval(updateTimer, 1000);
 }
 
@@ -127,6 +126,6 @@ function startWorking() {
   console.log("Working!");
   background.style.backgroundColor = workColor;
   currentlyWorking = 1;
-  currentTime = 5;
+  currentTime = workTimeInSeconds;
   timeInterval = window.setInterval(updateTimer, 1000);
 }
