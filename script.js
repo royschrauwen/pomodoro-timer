@@ -17,6 +17,20 @@ const workTimeInSeconds = workTimeInMinutes * 60;
 const shortBreakTimeInSeconds = shortBreakTimeInMinutes * 60;
 const longBreakTimeInSeconds = longBreakTimeInMinutes * 60;
 
+const defaultSequence = 8;
+let currentSequence;
+const sequenceNames = [
+  "End",
+  "Long Break!",
+  "Work 4",
+  "Short Break 3",
+  "Work 3",
+  "Short Break 2",
+  "Work 2",
+  "Short Break 1",
+  "Work 1",
+];
+
 const defaultWorkTimes = 3; // 3 work timers before a long break
 let currentWorkTime;
 let currentlyWorking = 0;
@@ -32,24 +46,36 @@ function updateTimer() {
     timerSeconds.textContent = addLeadingZero(currentTime % 60);
     currentTime--;
   } else {
-    console.log("Tijd is om. Tijd voor iets nieuws!");
+    console.log("===========================================");
     clearInterval(timeInterval);
 
-    console.log("currentWorkTime: " + currentWorkTime);
-    if (currentWorkTime > 0 && currentlyWorking == 1) {
-      startShortBreak();
-    } else if ((currentWorkTime = 0 && currentlyWorking == 1)) {
-      startLongBreak();
+    if (currentSequence > 1) {
+      if (currentSequence % 2 == 0) {
+        console.log("Even currentSequence --> Dus naar break gaan nu");
+        startShortBreak();
+      } else {
+        console.log("ONeven currentSequence --> Dus nu gaan werken");
+        startWorking();
+      }
     } else {
-      startWorking();
+      console.log("EINDE TIMER! START MAAR OPNIEUW!");
+      clearInterval(timeInterval);
+      //startTimer();
     }
-    //alert("Timer gestopt!");
   }
 }
 
 function startTimer() {
   console.log("START TIMER!");
   //currentTime = workTimeInSeconds;
+  currentSequence = defaultSequence;
+  console.log(
+    "currentSequence: " +
+      sequenceNames[currentSequence] +
+      " (" +
+      currentSequence +
+      ")"
+  );
   currentlyWorking = 1;
   currentWorkTime = defaultWorkTimes;
   timeInterval = window.setInterval(updateTimer, 1000);
@@ -61,20 +87,35 @@ function addLeadingZero(number) {
   return number;
 }
 
-function changeBackground() {
-  background.style.backgroundColor = "#00FF00";
-}
+// function changeBackground() {
+//   background.style.backgroundColor = "#00FF00";
+// }
 
 function startShortBreak() {
   console.log("Short break");
   background.style.backgroundColor = "#00FF00";
-  currentlyWorking = 0;
+  currentSequence--;
+  console.log(
+    "currentSequence: " +
+      sequenceNames[currentSequence] +
+      " (" +
+      currentSequence +
+      ")"
+  );
   currentTime = 5;
   timeInterval = window.setInterval(updateTimer, 1000);
 }
 
 function startWorking() {
   currentWorkTime--;
+  currentSequence--;
+  console.log(
+    "currentSequence: " +
+      sequenceNames[currentSequence] +
+      " (" +
+      currentSequence +
+      ")"
+  );
   console.log("Working!");
   background.style.backgroundColor = "#FF0000";
   currentlyWorking = 1;
