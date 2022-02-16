@@ -21,6 +21,8 @@ const workTimeInSeconds = workTimeInMinutes * 60;
 const shortBreakTimeInSeconds = shortBreakTimeInMinutes * 60;
 const longBreakTimeInSeconds = longBreakTimeInMinutes * 60;
 
+let newStatus;
+
 const defaultSequence = 8;
 let currentSequence = defaultSequence;
 const sequenceNames = [
@@ -65,7 +67,7 @@ function updateTimer() {
     currentTime--;
   } else {
     console.log("===========================================");
-    clearInterval(timeInterval);
+    // clearInterval(timeInterval);
 
     if (currentSequence > 1) {
       updateStatusField();
@@ -139,10 +141,10 @@ function updateStatusField() {
   // De gekozen array is afhankelijk van of we werken of pauze houden
 
   if (currentSequence % 2 == 0) {
-    let newStatus =
+    newStatus =
       statusMessageBreak[Math.floor(Math.random() * statusMessageBreak.length)];
   } else {
-    let newStatus =
+    newStatus =
       statusMessageWork[Math.floor(Math.random() * statusMessageWork.length)];
   }
 
