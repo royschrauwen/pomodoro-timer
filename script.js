@@ -61,10 +61,7 @@ function addLeadingZero(number) {
 
 function updateTimer() {
   if (currentTime >= 0) {
-    timerDiv.textContent =
-      addLeadingZero(Math.floor(currentTime / 60)) +
-      " : " +
-      addLeadingZero(currentTime % 60);
+    timerDiv.textContent = formatTimer();
     currentTime--;
   } else {
     currentSequence--;
@@ -77,11 +74,17 @@ function updateTimer() {
         startBreak();
       }
     } else {
-      console.log("EINDE TIMER! START MAAR OPNIEUW!");
-      clearInterval(timeInterval);
-      toggleTimer();
+      resetTimer();
     }
   }
+}
+
+function formatTimer() {
+  return (
+    addLeadingZero(Math.floor(currentTime / 60)) +
+    " : " +
+    addLeadingZero(currentTime % 60)
+  );
 }
 
 function toggleTimer() {
@@ -93,9 +96,7 @@ function toggleTimer() {
     }
     changeButton();
   } else {
-    hasStarted = true;
     resetTimer();
-    startTimer();
   }
   changeButton();
 }
@@ -111,11 +112,14 @@ function startTimer() {
 }
 
 function resetTimer() {
+  clearInterval(timeInterval);
+  hasStarted = true;
   resetMarkerStyles();
   currentSequence = defaultNumberOfSequences;
   currentWorkTime = workTimeInSeconds;
   currentTime = workTimeInSeconds;
   updateVisuals();
+  startTimer();
 }
 
 function resetMarkerStyles() {
