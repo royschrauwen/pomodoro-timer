@@ -46,8 +46,13 @@ const statusMessageWork = [
   "Focus on the task!",
   "Time to work!",
   "Hard work pays off",
+  "May the force be with you!",
 ];
-const statusMessageBreak = ["Time to relax", "Have a break", "Walk around"];
+const statusMessageBreak = [
+  "Time to relax",
+  "Have a break",
+  "Time for a short walk",
+];
 
 /* ========== FUNCTIONS ========== */
 
@@ -69,7 +74,13 @@ function updateTimer() {
     console.log("===========================================");
     clearInterval(timeInterval);
     currentSequence--;
-
+    console.log(
+      "currentSequence: " +
+        sequenceNames[currentSequence] +
+        " (" +
+        currentSequence +
+        ")"
+    );
     if (currentSequence > 0) {
       updateStatusField();
       if (currentSequence % 2 == 0) {
@@ -106,44 +117,33 @@ function startTimer() {
 function startShortBreak() {
   currentTime = shortBreakTimeInSeconds;
   var temp = defaultSequence - currentSequence;
-  console.log("startShortBreak(): defaultSequence - currentSequence: " + temp);
-  //   if (defaultSequence - currentSequence == 1) {
-  //     currentTime = longBreakTimeInSeconds;
-  //   }
-  console.log(
-    "currentSequence: " +
-      sequenceNames[currentSequence] +
-      " (" +
-      currentSequence +
-      ")"
-  );
+  //   console.log("startShortBreak(): defaultSequence - currentSequence: " + temp);
+  if (defaultSequence - currentSequence == defaultSequence - 1) {
+    currentTime = longBreakTimeInSeconds;
+  }
+
   timeInterval = window.setInterval(updateTimer, 1000);
 }
 
 function startWorking() {
-  currentWorkTime--;
-  console.log(
-    "currentSequence: " +
-      sequenceNames[currentSequence] +
-      " (" +
-      currentSequence +
-      ")"
-  );
-  console.log("Working!");
-  currentlyWorking = 1;
   currentTime = workTimeInSeconds;
   timeInterval = window.setInterval(updateTimer, 1000);
 }
 
 function updateStatusField() {
-  // Kies een bericht uit een array van berichten
-  // De gekozen array is afhankelijk van of we werken of pauze houden
-
-  var i = defaultSequence - currentSequence;
-  console.log("updateStatusField(): defaultSequence - currentSequence: " + i);
-  markers[i].style.backgroundColor = "#FF00FF";
-  if (i >= 1) {
-    markers[i - 1].style.backgroundColor = "#FF0000";
+  //   var i = defaultSequence - currentSequence;
+  //   console.log("updateStatusField(): defaultSequence - currentSequence: " + i);
+  //   console.log(
+  //     "updateStatusField(): currentSequence: " +
+  //       sequenceNames[currentSequence] +
+  //       " (" +
+  //       currentSequence +
+  //       ")"
+  //   );
+  markers[defaultSequence - currentSequence].style.backgroundColor = "#FF00FF";
+  if (defaultSequence - currentSequence >= 1) {
+    markers[defaultSequence - currentSequence - 1].style.backgroundColor =
+      "#FF0000";
   }
 
   if (currentSequence % 2 == 0) {
