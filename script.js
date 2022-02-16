@@ -2,7 +2,7 @@
 const timerDiv = document.querySelector("#timer");
 const statusField = document.querySelector("#status");
 const startButton = document.querySelector("#startBtn");
-const background = document.querySelector("body");
+const markers = document.querySelectorAll(".marker");
 
 // Eventlisteners
 startButton.addEventListener("click", startTimer);
@@ -12,8 +12,8 @@ const workColor = "#FF6347";
 const breakColor = "#7FFFD4";
 
 // Time in minutes. Can be inputted in later version
-const workTimeInMinutes = 1; // Default 25
-const shortBreakTimeInMinutes = 1; // Default 3
+const workTimeInMinutes = 0.05; // Default 25
+const shortBreakTimeInMinutes = 0.1; // Default 3
 const longBreakTimeInMinutes = 3; // Default 30
 
 // Make seconds from the times.
@@ -67,16 +67,15 @@ function updateTimer() {
     currentTime--;
   } else {
     console.log("===========================================");
-    // clearInterval(timeInterval);
+    clearInterval(timeInterval);
+    currentSequence--;
 
-    if (currentSequence > 1) {
+    if (currentSequence > 0) {
       updateStatusField();
       if (currentSequence % 2 == 0) {
-        console.log("Even currentSequence --> Dus naar break gaan nu");
-        startShortBreak();
-      } else {
-        console.log("ONeven currentSequence --> Dus nu gaan werken");
         startWorking();
+      } else {
+        startShortBreak();
       }
     } else {
       console.log("EINDE TIMER! START MAAR OPNIEUW!");
@@ -89,9 +88,9 @@ function updateTimer() {
 function startTimer() {
   startButton.disabled = true;
   startButton.textContent = "Pause Timer";
-  statusField.textContent = "Let's start working!";
-  console.log("START TIMER!");
   currentSequence = defaultSequence;
+  updateStatusField();
+  console.log("START TIMER!");
   console.log(
     "currentSequence: " +
       sequenceNames[currentSequence] +
@@ -105,9 +104,12 @@ function startTimer() {
 }
 
 function startShortBreak() {
-  console.log("Short break");
-  background.style.backgroundColor = breakColor;
-  currentSequence--;
+  currentTime = shortBreakTimeInSeconds;
+  var temp = defaultSequence - currentSequence;
+  console.log("startShortBreak(): defaultSequence - currentSequence: " + temp);
+  //   if (defaultSequence - currentSequence == 1) {
+  //     currentTime = longBreakTimeInSeconds;
+  //   }
   console.log(
     "currentSequence: " +
       sequenceNames[currentSequence] +
@@ -115,13 +117,11 @@ function startShortBreak() {
       currentSequence +
       ")"
   );
-  currentTime = shortBreakTimeInSeconds;
   timeInterval = window.setInterval(updateTimer, 1000);
 }
 
 function startWorking() {
   currentWorkTime--;
-  currentSequence--;
   console.log(
     "currentSequence: " +
       sequenceNames[currentSequence] +
@@ -130,7 +130,6 @@ function startWorking() {
       ")"
   );
   console.log("Working!");
-  background.style.backgroundColor = workColor;
   currentlyWorking = 1;
   currentTime = workTimeInSeconds;
   timeInterval = window.setInterval(updateTimer, 1000);
@@ -140,12 +139,21 @@ function updateStatusField() {
   // Kies een bericht uit een array van berichten
   // De gekozen array is afhankelijk van of we werken of pauze houden
 
+  var i = defaultSequence - currentSequence;
+  console.log("updateStatusField(): defaultSequence - currentSequence: " + i);
+  markers[i].style.backgroundColor = "#FF00FF";
+  if (i >= 1) {
+    markers[i - 1].style.backgroundColor = "#FF0000";
+  }
+
   if (currentSequence % 2 == 0) {
     newStatus =
-      statusMessageBreak[Math.floor(Math.random() * statusMessageBreak.length)];
+      statusMessageWork[Math.floor(Math.random() * statusMessageWork.length)];
+    document.body.style.backgroundColor = workColor;
   } else {
     newStatus =
-      statusMessageWork[Math.floor(Math.random() * statusMessageWork.length)];
+      statusMessageBreak[Math.floor(Math.random() * statusMessageBreak.length)];
+    document.body.style.backgroundColor = breakColor;
   }
 
   statusField.textContent = newStatus;
