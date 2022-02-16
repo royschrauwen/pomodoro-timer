@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Roboto+Mono&display=swap");
 
 *,
 *::before,
@@ -42,6 +42,7 @@ h2 {
   font-size: 4.5rem;
   text-align: center;
   padding: 2rem;
+  font-family: "Roboto Mono", monospace;
 }
 
 .buttons {
