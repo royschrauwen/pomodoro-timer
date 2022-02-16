@@ -8,40 +8,29 @@ const startButton = document.querySelector("#startBtn");
 const markers = document.querySelectorAll(".marker");
 
 // Eventlisteners
-startButton.addEventListener("click", startTimer);
+startButton.addEventListener("click", resetTimer);
 
 // Styling variables
 const workColor = "#FF6347";
 const breakColor = "#7FFFD4";
 
 // Time in minutes. Can be inputted in later version
-const workTimeInMinutes = 0.05; // Default 25
+const workTimeInMinutes = 0.1; // Default 25
 const shortBreakTimeInMinutes = 0.05; // Default 3
-const longBreakTimeInMinutes = 3; // Default 30
+const longBreakTimeInMinutes = 0.2; // Default 30
 
 // Make seconds from the times.
 const workTimeInSeconds = workTimeInMinutes * 60;
 const shortBreakTimeInSeconds = shortBreakTimeInMinutes * 60;
 const longBreakTimeInSeconds = longBreakTimeInMinutes * 60;
 
-let newStatus;
+// By default there are 8 sequences
+const defaultNumberOfSequences = 8;
 
-const defaultSequence = 8;
-let currentSequence = defaultSequence;
-// const sequenceNames = [
-//   "End",
-//   "Long Break!",
-//   "Work 4",
-//   "Short Break 3",
-//   "Work 3",
-//   "Short Break 2",
-//   "Work 2",
-//   "Short Break 1",
-//   "Work 1",
-// ];
-
-var currentTime = workTimeInSeconds;
-
+// Create variables
+let newStatusMessage;
+let currentSequence;
+let currentTime;
 let timeInterval;
 
 // Array met status-berichten
@@ -49,7 +38,7 @@ const statusMessageWork = [
   "Focus on the task!",
   "Time to work!",
   "Hard work pays off",
-  "May the force be with you!",
+  "Go go go!",
 ];
 const statusMessageBreak = [
   "Time to relax",
@@ -76,64 +65,88 @@ function updateTimer() {
       addLeadingZero(currentTime % 60);
     currentTime--;
   } else {
-    clearInterval(timeInterval);
     currentSequence--;
 
     if (currentSequence > 0) {
       updateStatusField();
       if (currentSequence % 2 == 0) {
-        startWorking();
+        setNewTime(workTimeInSeconds);
       } else {
-        startShortBreak();
+        startBreak();
       }
     } else {
       console.log("EINDE TIMER! START MAAR OPNIEUW!");
       clearInterval(timeInterval);
+      resetTimer();
     }
   }
 }
 
-function startTimer() {
-  startButton.disabled = true;
-  startButton.textContent = "Pause Timer";
-  currentSequence = defaultSequence;
-  updateStatusField();
-
-  currentlyWorking = 1;
+function resetTimer() {
+  resetMarkerStyles();
+  currentSequence = defaultNumberOfSequences;
   currentWorkTime = workTimeInSeconds;
-  timeInterval = window.setInterval(updateTimer, 1000);
-}
-
-function startShortBreak() {
-  currentTime = shortBreakTimeInSeconds;
-  var temp = defaultSequence - currentSequence;
-  if (defaultSequence - currentSequence == defaultSequence - 1) {
-    currentTime = longBreakTimeInSeconds;
-  }
-
-  timeInterval = window.setInterval(updateTimer, 1000);
-}
-
-function startWorking() {
   currentTime = workTimeInSeconds;
+  changeButton();
   timeInterval = window.setInterval(updateTimer, 1000);
+  updateStatusField();
+}
+
+function resetMarkerStyles() {
+  markers.forEach((element) => {
+    element.classList.remove("busy");
+    element.classList.remove("done");
+  });
+}
+
+function changeButton() {
+  if (!startButton.disabled) {
+    startButton.disabled = true;
+    startButton.textContent = "Pause Timer";
+    return;
+  }
+  startButton.disabled = true;
+  startButton.textContent = "Start Timer";
+}
+
+function setNewTime(newTime) {
+  currentTime = newTime;
+}
+
+function startBreak() {
+  if (currentSequence == 1) {
+    setNewTime(longBreakTimeInSeconds);
+    return;
+  }
+  setNewTime(shortBreakTimeInSeconds);
 }
 
 function updateStatusField() {
-  markers[defaultSequence - currentSequence].classList.add("busy");
-  if (defaultSequence - currentSequence >= 1) {
-    markers[defaultSequence - currentSequence - 1].classList.add("done");
+  markers[defaultNumberOfSequences - currentSequence].classList.add("busy");
+  if (defaultNumberOfSequences - currentSequence >= 1) {
+    markers[defaultNumberOfSequences - currentSequence - 1].classList.add(
+      "done"
+    );
   }
 
+  statusField.textContent = getNewStatusMessage();
+  document.body.style.backgroundColor = getNewBackgroundColor();
+}
+function getNewStatusMessage() {
   if (currentSequence % 2 == 0) {
-    newStatus =
+    newStatusMessage =
       statusMessageWork[Math.floor(Math.random() * statusMessageWork.length)];
-    document.body.style.backgroundColor = workColor;
-  } else {
-    newStatus =
-      statusMessageBreak[Math.floor(Math.random() * statusMessageBreak.length)];
-    document.body.style.backgroundColor = breakColor;
+    return newStatusMessage;
   }
 
-  statusField.textContent = newStatus;
+  newStatusMessage =
+    statusMessageBreak[Math.floor(Math.random() * statusMessageBreak.length)];
+  return newStatusMessage;
+}
+
+function getNewBackgroundColor() {
+  if (currentSequence % 2 == 0) {
+    return workColor;
+  }
+  return breakColor;
 }
