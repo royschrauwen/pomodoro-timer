@@ -1,3 +1,47 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   background-color: tomato;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+main {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+h1 {
+  /* background-color: pink; */
+  font-size: 3rem;
+}
+
+.timer {
+  /* background-color: gold; */
+  font-size: 4.5rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.buttons {
+  /* background-color: aqua; */
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+button {
+  padding: 1rem;
+  font-size: 1rem;
 }
