@@ -5,19 +5,21 @@
 const timerDiv = document.querySelector("#timer");
 const statusField = document.querySelector("#status");
 const startButton = document.querySelector("#startBtn");
+const resetButton = document.querySelector("#resetBtn");
 const markers = document.querySelectorAll(".marker");
 
 // Eventlisteners
 startButton.addEventListener("click", toggleTimer);
+resetButton.addEventListener("click", resetTimer);
 
 // Styling variables
 const workColor = "#FF6347";
 const breakColor = "#7FFFD4";
 
 // Time in minutes. Can be inputted in later version
-const workTimeInMinutes = 0.1; // Default 25
-const shortBreakTimeInMinutes = 0.05; // Default 3
-const longBreakTimeInMinutes = 0.2; // Default 30
+const workTimeInMinutes = 25; // Default 25
+const shortBreakTimeInMinutes = 5; // Default 5
+const longBreakTimeInMinutes = 35; // Default 35
 
 // Make seconds from the times.
 const workTimeInSeconds = workTimeInMinutes * 60;
