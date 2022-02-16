@@ -58,3 +58,30 @@ button {
   padding: 1rem;
   font-size: 1rem;
 }
+
+ul {
+  list-style: none;
+}
+
+.busy {
+  background-color: gold;
+}
+
+.done {
+  background-color: forestgreen;
+}
+
+li:before {
+  content: "-";
+  margin-right: 0.5rem;
+}
+
+.busy:before {
+  content: ">";
+  margin-right: 0.5rem;
+}
+
+.done:before {
+  content: "✓";
+  margin-right: 0.5rem;
+}

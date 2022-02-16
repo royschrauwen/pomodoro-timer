@@ -120,10 +120,9 @@ function startWorking() {
 }
 
 function updateStatusField() {
-  markers[defaultSequence - currentSequence].style.backgroundColor = "#FF00FF";
+  markers[defaultSequence - currentSequence].classList.add("busy");
   if (defaultSequence - currentSequence >= 1) {
-    markers[defaultSequence - currentSequence - 1].style.backgroundColor =
-      "#FF0000";
+    markers[defaultSequence - currentSequence - 1].classList.add("done");
   }
 
   if (currentSequence % 2 == 0) {
