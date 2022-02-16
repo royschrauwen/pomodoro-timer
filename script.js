@@ -1,21 +1,20 @@
-const timerMinutes = document.querySelector("#timer-minutes");
-const timerSeconds = document.querySelector("#timer-seconds");
-
+// References
+const timerDiv = document.querySelector("#timer");
 const statusField = document.querySelector("#status");
-
 const startButton = document.querySelector("#startBtn");
-
 const background = document.querySelector("body");
 
+// Eventlisteners
 startButton.addEventListener("click", startTimer);
 
+// Styling variables
 const workColor = "#FF6347";
 const breakColor = "#7FFFD4";
 
 // Time in minutes. Can be inputted in later version
-const workTimeInMinutes = 25; // Default 25
-const shortBreakTimeInMinutes = 3; // Default 3
-const longBreakTimeInMinutes = 30; // Default 30
+const workTimeInMinutes = 2; // Default 25
+const shortBreakTimeInMinutes = 1; // Default 3
+const longBreakTimeInMinutes = 3; // Default 30
 
 // Make seconds from the times.
 const workTimeInSeconds = workTimeInMinutes * 60;
@@ -23,7 +22,7 @@ const shortBreakTimeInSeconds = shortBreakTimeInMinutes * 60;
 const longBreakTimeInSeconds = longBreakTimeInMinutes * 60;
 
 const defaultSequence = 8;
-let currentSequence;
+let currentSequence = defaultSequence;
 const sequenceNames = [
   "End",
   "Long Break!",
@@ -36,19 +35,16 @@ const sequenceNames = [
   "Work 1",
 ];
 
-// const defaultWorkTimes = 3; // 3 work timers before a long break
-// let currentWorkTime;
-// let currentlyWorking = 0;
-
 var currentTime = workTimeInSeconds;
-// var currentTime = 5;
 
 let timeInterval;
 
 function updateTimer() {
   if (currentTime >= 0) {
-    timerMinutes.textContent = addLeadingZero(Math.floor(currentTime / 60));
-    timerSeconds.textContent = addLeadingZero(currentTime % 60);
+    timerDiv.textContent =
+      addLeadingZero(Math.floor(currentTime / 60)) +
+      " : " +
+      addLeadingZero(currentTime % 60);
     currentTime--;
   } else {
     console.log("===========================================");
@@ -72,7 +68,7 @@ function updateTimer() {
 
 function startTimer() {
   startButton.disabled = true;
-  startButton.textContent = "-";
+  startButton.textContent = "Pause Timer";
   statusField.textContent = "Let's start working!";
   console.log("START TIMER!");
   currentSequence = defaultSequence;
@@ -93,10 +89,6 @@ function addLeadingZero(number) {
   while (number.length < 2) number = "0" + number;
   return number;
 }
-
-// function changeBackground() {
-//   background.style.backgroundColor = "#00FF00";
-// }
 
 function startShortBreak() {
   statusField.textContent = "Time for a break!";
