@@ -71,6 +71,8 @@ function updateTimer() {
 }
 
 function startTimer() {
+  startButton.disabled = true;
+  startButton.textContent = "-";
   statusField.textContent = "Let's start working!";
   console.log("START TIMER!");
   currentSequence = defaultSequence;
