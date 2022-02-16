@@ -1,6 +1,8 @@
 const timerMinutes = document.querySelector("#timer-minutes");
 const timerSeconds = document.querySelector("#timer-seconds");
 
+const statusField = document.querySelector("#status");
+
 const startButton = document.querySelector("#startBtn");
 
 const background = document.querySelector("body");
@@ -69,6 +71,7 @@ function updateTimer() {
 }
 
 function startTimer() {
+  statusField.textContent = "Let's start working!";
   console.log("START TIMER!");
   //currentTime = workTimeInSeconds;
   currentSequence = defaultSequence;
@@ -95,6 +98,7 @@ function addLeadingZero(number) {
 // }
 
 function startShortBreak() {
+  statusField.textContent = "Time for a break!";
   console.log("Short break");
   background.style.backgroundColor = breakColor;
   currentSequence--;
@@ -110,6 +114,7 @@ function startShortBreak() {
 }
 
 function startWorking() {
+  statusField.textContent = "Focus on the task!";
   currentWorkTime--;
   currentSequence--;
   console.log(
