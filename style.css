@@ -25,7 +25,7 @@ h1 {
   font-size: 3rem;
 }
 
-.timer {
+#timer {
   /* background-color: gold; */
   font-size: 4.5rem;
   text-align: center;
