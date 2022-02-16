@@ -12,7 +12,7 @@ const workColor = "#FF6347";
 const breakColor = "#7FFFD4";
 
 // Time in minutes. Can be inputted in later version
-const workTimeInMinutes = 2; // Default 25
+const workTimeInMinutes = 1; // Default 25
 const shortBreakTimeInMinutes = 1; // Default 3
 const longBreakTimeInMinutes = 3; // Default 30
 
@@ -39,6 +39,23 @@ var currentTime = workTimeInSeconds;
 
 let timeInterval;
 
+// Array met status-berichten
+const statusMessageWork = [
+  "Focus on the task!",
+  "Time to work!",
+  "Hard work pays off",
+];
+const statusMessageBreak = ["Time to relax", "Have a break", "Walk around"];
+
+/* ========== FUNCTIONS ========== */
+
+// Ik vind het er mooier uit zien als getallen een voorloopnul hebben
+function addLeadingZero(number) {
+  number = number.toString();
+  while (number.length < 2) number = "0" + number;
+  return number;
+}
+
 function updateTimer() {
   if (currentTime >= 0) {
     timerDiv.textContent =
@@ -51,6 +68,7 @@ function updateTimer() {
     clearInterval(timeInterval);
 
     if (currentSequence > 1) {
+      updateStatusField();
       if (currentSequence % 2 == 0) {
         console.log("Even currentSequence --> Dus naar break gaan nu");
         startShortBreak();
@@ -84,14 +102,7 @@ function startTimer() {
   timeInterval = window.setInterval(updateTimer, 1000);
 }
 
-function addLeadingZero(number) {
-  number = number.toString();
-  while (number.length < 2) number = "0" + number;
-  return number;
-}
-
 function startShortBreak() {
-  statusField.textContent = "Time for a break!";
   console.log("Short break");
   background.style.backgroundColor = breakColor;
   currentSequence--;
@@ -107,7 +118,6 @@ function startShortBreak() {
 }
 
 function startWorking() {
-  statusField.textContent = "Focus on the task!";
   currentWorkTime--;
   currentSequence--;
   console.log(
@@ -122,4 +132,19 @@ function startWorking() {
   currentlyWorking = 1;
   currentTime = workTimeInSeconds;
   timeInterval = window.setInterval(updateTimer, 1000);
+}
+
+function updateStatusField() {
+  // Kies een bericht uit een array van berichten
+  // De gekozen array is afhankelijk van of we werken of pauze houden
+
+  if (currentSequence % 2 == 0) {
+    let newStatus =
+      statusMessageBreak[Math.floor(Math.random() * statusMessageBreak.length)];
+  } else {
+    let newStatus =
+      statusMessageWork[Math.floor(Math.random() * statusMessageWork.length)];
+  }
+
+  statusField.textContent = newStatus;
 }
