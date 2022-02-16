@@ -8,7 +8,7 @@ const startButton = document.querySelector("#startBtn");
 const markers = document.querySelectorAll(".marker");
 
 // Eventlisteners
-startButton.addEventListener("click", resetTimer);
+startButton.addEventListener("click", toggleTimer);
 
 // Styling variables
 const workColor = "#FF6347";
@@ -32,6 +32,8 @@ let newStatusMessage;
 let currentSequence;
 let currentTime;
 let timeInterval;
+let timerRunning = false;
+let hasStarted = false;
 
 // Array met status-berichten
 const statusMessageWork = [
@@ -68,7 +70,7 @@ function updateTimer() {
     currentSequence--;
 
     if (currentSequence > 0) {
-      updateStatusField();
+      updateVisuals();
       if (currentSequence % 2 == 0) {
         setNewTime(workTimeInSeconds);
       } else {
@@ -77,9 +79,35 @@ function updateTimer() {
     } else {
       console.log("EINDE TIMER! START MAAR OPNIEUW!");
       clearInterval(timeInterval);
-      resetTimer();
+      toggleTimer();
     }
   }
+}
+
+function toggleTimer() {
+  if (hasStarted) {
+    if (!timerRunning) {
+      startTimer();
+    } else {
+      stopTimer();
+    }
+    changeButton();
+  } else {
+    hasStarted = true;
+    resetTimer();
+    startTimer();
+  }
+  changeButton();
+}
+
+function stopTimer() {
+  timerRunning = false;
+  clearInterval(timeInterval);
+}
+
+function startTimer() {
+  timerRunning = true;
+  timeInterval = window.setInterval(updateTimer, 1000);
 }
 
 function resetTimer() {
@@ -87,9 +115,7 @@ function resetTimer() {
   currentSequence = defaultNumberOfSequences;
   currentWorkTime = workTimeInSeconds;
   currentTime = workTimeInSeconds;
-  changeButton();
-  timeInterval = window.setInterval(updateTimer, 1000);
-  updateStatusField();
+  updateVisuals();
 }
 
 function resetMarkerStyles() {
@@ -100,12 +126,12 @@ function resetMarkerStyles() {
 }
 
 function changeButton() {
-  if (!startButton.disabled) {
-    startButton.disabled = true;
+  if (timerRunning) {
+    // timerRunning = true;
     startButton.textContent = "Pause Timer";
     return;
   }
-  startButton.disabled = true;
+  //   timerRunning = false;
   startButton.textContent = "Start Timer";
 }
 
@@ -121,7 +147,7 @@ function startBreak() {
   setNewTime(shortBreakTimeInSeconds);
 }
 
-function updateStatusField() {
+function updateVisuals() {
   markers[defaultNumberOfSequences - currentSequence].classList.add("busy");
   if (defaultNumberOfSequences - currentSequence >= 1) {
     markers[defaultNumberOfSequences - currentSequence - 1].classList.add(
