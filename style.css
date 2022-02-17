@@ -51,7 +51,7 @@ h1 {
 }
 
 button {
-  padding: 1rem;
+  padding: 2rem;
   font-size: 1.25rem;
   margin: 0.5rem;
   border-radius: 0.25rem;
@@ -59,7 +59,7 @@ button {
 }
 
 #resetBtn {
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 0.75rem;
 }
 
