@@ -122,6 +122,7 @@ function resetTimer() {
   currentTime = workTimeInSeconds;
   updateVisuals();
   startTimer();
+  startButton.textContent = "Pause Timer";
 }
 
 function resetMarkerStyles() {
