@@ -25,16 +25,10 @@ main {
   -webkit-box-shadow: 3px 2px 15px -3px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 3px 2px 15px -3px rgba(0, 0, 0, 0.4);
   margin: 8rem;
-  min-width: 40rem;
+  /* min-width: 40rem; */
 }
 
 h1 {
-  /* background-color: pink; */
-  font-size: 2rem;
-  text-align: center;
-}
-
-h2 {
   text-align: center;
   font-size: 3rem;
 }
@@ -60,6 +54,7 @@ button {
   padding: 1rem;
   font-size: 1.25rem;
   margin: 0.5rem;
+  border-radius: 0.25rem;
 }
 
 #resetBtn {
@@ -96,4 +91,43 @@ li:before {
 .done:before {
   content: "✓";
   margin-right: 0.5rem;
+}
+
+@media (min-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+  main {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  #timer {
+    font-size: 4rem;
+    padding: 1rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+@media (min-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+
+@media (min-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+
+@media (min-width: 961px) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+
+@media (min-width: 1025px) {
+  /* big landscape tablets, laptops, and desktops */
+}
+
+@media (min-width: 1281px) {
+  /* hi-res laptops and desktops */
 }
